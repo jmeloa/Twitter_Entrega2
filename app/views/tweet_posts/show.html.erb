@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>User:</strong>
+  <%= @tweet_post.user.user_name %>
+  <%= image_tag(@tweet_post.user.user_photo_url, style: "max-width: 60px; border-radius: 10px;") if @tweet_post.user.user_photo_url? %>
+</p>
+
+
+<p>
+  <strong>Post:</strong>
+  <%= @tweet_post.post %>
+</p>
+
+<%= button_to 'Like', tweet_post_likes_path(@tweet_post), method: :post %>
+<%= button_to 'ReTweetear', tweet_post_likes_path(@tweet_post) %>
+
+<br><br>
+
+
+<%= link_to 'Edit', edit_tweet_post_path(@tweet_post) %> |
+<%= link_to 'Back', tweet_posts_path %>

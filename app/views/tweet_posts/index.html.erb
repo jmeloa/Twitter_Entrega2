@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Twitter</h1>
+<p>Estos son los posts tuyos y los de tus amigos</p>
+<% if user_signed_in? %>
+    <p align="right">Bienvenido <%= current_user.user_name %></p>
+<% end %>
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+ <a class="navbar-brand">Busque por contenido</a>
+ <form class="form-inline">
+ <input class="form-control mr-sm-2" type="content" placeholder="Search" aria-label="Search" name="content">
+ <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+ 
+ </form>
+</nav>
+
+
+<%= button_to 'Nuevo Tweet', new_tweet_post_path, method: 'get' %>
+
+<%= will_paginate @tweet_posts, previous_label: h("<"), next_label: h(">") %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Post</th>
+    <th scope="col" >User</th>
+    <th scope="col" >Creado</th>
+    <th scope="col" align="center">#Likes</th>
+    <th scope="col" align="center">#Retweets</th>
+    <th scope="col" colspan="3" align="center">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% a = 1 %>
+    <% @tweet_posts.each do |tweet_post| %>
+      <tr>
+        <th scope="row"><%=a + (5*(@tweet_posts.current_page-1))%></th>
+        <td><%= truncate(tweet_post.post, :length =>80) %></td>
+        <td align="center"><%= image_tag(tweet_post.user.user_photo_url, style: "max-width: 50px; border-radius: 20px;") %></td>
+        
+        <td align="left"><%= time_ago_in_words(tweet_post.created_at) %></td>
+        
+        <td align="center"><%= tweet_post.likes.count %></td>
+        
+        <td align="center">2</td>
+        <td><%= link_to 'Show', tweet_post %></td>
+        <td><%= link_to 'Edit', edit_tweet_post_path(tweet_post) %></td>
+        <td><%= link_to 'Destroy', tweet_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% a = a + 1 %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tweet Post', new_tweet_post_path %>
