@@ -21,11 +21,9 @@ class TweetPostsController < ApplicationController
     # @tweet_posts = TweetPost.order("created_at DESC").page(params[:page]).per_page(5)
   end
 
+  
   # GET /tweet_posts/1 or /tweet_posts/1.json
-  def show
-    
-  end
-
+  
   # GET /tweet_posts/new
   def new
     @tweet_post = TweetPost.new

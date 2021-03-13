@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_203215) do
+ActiveRecord::Schema.define(version: 2021_03_13_154425) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(version: 2021_03_11_203215) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "User_id", null: false
-    t.integer "Tweet_Post_id", null: false
+    t.integer "user_id", null: false
+    t.integer "tweet_post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["Tweet_Post_id"], name: "index_likes_on_Tweet_Post_id"
-    t.index ["User_id"], name: "index_likes_on_User_id"
+    t.index ["tweet_post_id"], name: "index_likes_on_tweet_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "tweet_posts", force: :cascade do |t|
@@ -74,12 +74,14 @@ ActiveRecord::Schema.define(version: 2021_03_11_203215) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "user_name"
     t.string "user_photo_url"
+    t.string "api_key", null: false
+    t.index ["api_key"], name: "index_users_on_api_key", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "friends", "users"
-  add_foreign_key "likes", "Tweet_Posts"
-  add_foreign_key "likes", "Users"
+  add_foreign_key "likes", "tweet_posts"
+  add_foreign_key "likes", "users"
   add_foreign_key "tweet_posts", "users"
 end

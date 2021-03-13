@@ -28,9 +28,20 @@ class LikesController < ApplicationController
   def create
   #    @tweet_post.likes.create(User_id: current_user.id)
    #@like = Like.new(:current_user.id, :tweet_post_id)
-   
-   @like = Like.create(User_id: current_user.id, Tweet_Post_id: :tweet_post_id)
-   
+   if already_liked?
+    flash[:notice] = "You can't like more than once"
+  else
+    @like = Like.create!(user: current_user, tweet_post_id: params[:tweet_post_id])
+    respond_to do |format|
+      if @like.save
+        format.html { redirect_to @tweet_post, notice: 'Like was successfully created.' }
+        format.json { render :show, status: :created, location: @tweet_post }
+      else
+        format.html { render :new }
+        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+      end
+    end
+  end 
    
    redirect_to tweet_posts_path
       
@@ -71,6 +82,11 @@ class LikesController < ApplicationController
     #def like_params
     #  params.require(:like).permit(:User_id, :tweet_id)
     #end
+    def already_liked?
+      Like.where(user_id: current_user.id, tweet_post_id:
+      params[:tweet_post_id]).exists?
+    end
+
 
     def find_post
       @tweet_post = TweetPost.find(params[:tweet_post_id])

@@ -1,7 +1,7 @@
 <h1>Bienvenido a Twitter</h1>
 <% if user_signed_in? %>
     <p>Bienvenido <%= current_user.user_name %></p>
-    <p><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete %></p>
+    <p><%= link_to "Cerrar Sesión", destroy_user_session_path, :method => :delete %></p>
 <% else %>
     <p>Para comenzar debe iniciar sesión o Registrarse</p>      
     <%= button_to 'Iniciar Sesión', new_user_session_path %>

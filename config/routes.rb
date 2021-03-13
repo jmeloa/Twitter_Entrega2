@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  get 'api/news'  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :friends
-  
+    
   resources :tweet_posts do
     resources :likes
   end

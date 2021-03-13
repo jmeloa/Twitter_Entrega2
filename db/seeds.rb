@@ -1,4 +1,5 @@
 require_relative '../lib/populator_fix.rb'
+require 'faker'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -6,9 +7,17 @@ require_relative '../lib/populator_fix.rb'
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.populate 10 do |u|
-    u.tweet_post_name = Faker::Movies::BackToTheFuture.character
-    u.user_photo_url = Faker::LoremFlickr.image(size: "50x60")
-    u.email = Faker::Internet.email
-    u.encrypted_password = "123456"
-  endAdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+#TweetPost.populate 10000 do |u|
+#    u.post = Faker::Movies::StarWars.quote
+#    u.id_owner = rand(1..3)
+#    u.user_id =  rand(1..3)
+#end    
+a=1 
+Like.populate 8000 do |u|
+    u.user_id = 3
+    u.tweet_post_id = a
+    a = a+1
+end
+
+
+

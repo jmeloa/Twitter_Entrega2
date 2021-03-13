@@ -5,14 +5,19 @@ class ApiController < ActionController::API
       @user = User.find_by(email: request.headers["X-EMAIL"]) 
       if @user.present?
         @tweet = TweetPost.new(post: request.headers["X-TWEET"], user_id: @user.id, id_owner: @user.id)
-                
-        if @tweet.save
-           render json: @tweet
-        else  
-           render json: 'No se pudo guardar'    
-        end
+        
+        if request.headers["X-API-KEY"] == @user.api_key        
+
+          if @tweet.save
+             render json: @tweet
+          else  
+             render json: "No se pudo guardar"    
+          end
+        else
+          render json: "Key no válido"
+        end  
       else
-          render json: 'No encontré usuario'    
+        render json: "User no encontrado"
       end
 
       

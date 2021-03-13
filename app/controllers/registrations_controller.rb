@@ -10,6 +10,9 @@ class RegistrationsController < Devise::RegistrationsController
     def update
         super
     end
- 
+
+    def destroy
+        super
+    end
 
 end  
