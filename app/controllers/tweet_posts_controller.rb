@@ -12,17 +12,18 @@ class TweetPostsController < ApplicationController
       aux = TweetPost.where(user_id: aux2)
       aux2 = aux.where("post LIKE ?", "%#{params[:content]}%")
       
-      @tweet_posts = aux2.order("created_at DESC").page(params[:page]).per_page(5)
+      @tweet_posts = aux2.order("created_at DESC").page(params[:page]).per_page(50)
     else
       aux = TweetPost.where(user_id: aux2)
-      @tweet_posts = aux.order("created_at DESC").page(params[:page]).per_page(5)
+      @tweet_posts = aux.order("created_at DESC").page(params[:page]).per_page(50)
     end
-
+    
     # @tweet_posts = TweetPost.order("created_at DESC").page(params[:page]).per_page(5)
   end
 
   # GET /tweet_posts/1 or /tweet_posts/1.json
   def show
+    
   end
 
   # GET /tweet_posts/new
@@ -43,9 +44,11 @@ class TweetPostsController < ApplicationController
       if @tweet_post.save
         format.html { redirect_to @tweet_post, notice: "Tweet post was successfully created." }
         format.json { render :show, status: :created, location: @tweet_post }
+        
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @tweet_post.errors, status: :unprocessable_entity }
+        
       end
     end
   end
@@ -56,9 +59,11 @@ class TweetPostsController < ApplicationController
       if @tweet_post.update(tweet_post_params)
         format.html { redirect_to @tweet_post, notice: "Tweet post was successfully updated." }
         format.json { render :show, status: :ok, location: @tweet_post }
+        
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @tweet_post.errors, status: :unprocessable_entity }
+        
       end
     end
   end

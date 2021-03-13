@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'api/news'  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :friends
@@ -6,7 +7,13 @@ Rails.application.routes.draw do
   resources :tweet_posts do
     resources :likes
   end
-
+  
+  get 'api/:fecha1/:fecha2', to: 'api#search'
+  get 'api/news', to: 'api#news'
+  post 'api/create', to: 'api#create_tweet' 
+  
+  
+  
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
   resources :likes
   resources :tweet_posts
